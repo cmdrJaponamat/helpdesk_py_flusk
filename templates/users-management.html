@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>УПРАВЛЕНИЕ ПОЛЬЗОВАТЕЛЯМИ</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>УПРАВЛЕНИЕ ПОЛЬЗОВАТЕЛЯМИ</h1>
+
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>ИМЯ</th>
+                    <th>EMAIL</th>
+                    <th>РОЛЬ</th>
+                    <th>ДЕЙСТВИЯ</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.role }}</td>
+                    <td>
+                        <button onclick="editUser({{ user.id }})">РЕДАКТИРОВАТЬ</button>
+                        <button onclick="deleteUser({{ user.id }})">УДАЛИТЬ</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Форма для создания нового пользователя -->
+        <h2>СОЗДАТЬ НОВОГО ПОЛЬЗОВАТЕЛЯ</h2>
+        <form id="createUserForm" action="/register" method="POST">
+            <label for="name">ИМЯ:</label><br>
+            <input type="text" id="name" name="name" required><br>
+
+            <label for="email">EMAIL:</label><br>
+            <input type="email" id="email" name="email" required><br>
+
+            <label for="password">ПАРОЛЬ:</label><br>
+            <input type="password" id="password" name="password" required><br>
+
+            <label for="role">РОЛЬ:</label><br>
+            <select id="role" name="role" required>
+                <option value="employee">СОТРУДНИК</option>
+                <option value="specialist">СПЕЦИАЛИСТ ИТ</option>
+                <option value="admin">АДМИНИСТРАТОР</option>
+            </select><br><br>
+
+            <button type="submit">СОЗДАТЬ</button>
+        </form>
+
+        <script>
+            // Функция для удаления пользователя
+            function deleteUser(userId) {
+                if (confirm('Вы уверены, что хотите удалить пользователя?')) {
+                    fetch(`/delete-user/${userId}`, { method: 'DELETE' })
+                        .then(response => response.json())
+                        .then(data => {
+                            alert(data.message);
+                            window.location.reload(); // Обновляем страницу после удаления
+                        })
+                        .catch(error => alert('Ошибка при удалении пользователя.'));
+                }
+            }
+
+            // Функция для редактирования пользователя
+            function editUser(userId) {
+                window.location.href = `/edit-user/${userId}`;
+            }
+        </script>
+    </div>
+</body>
+</html>

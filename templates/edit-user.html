@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>РЕДАКТИРОВАТЬ ПОЛЬЗОВАТЕЛЯ</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>РЕДАКТИРОВАТЬ ПОЛЬЗОВАТЕЛЯ ID={{ user.id }}</h1>
+
+        <form id="editUserForm" action="/edit-user/{{ user.id }}" method="POST">
+            <label for="name">ИМЯ:</label><br>
+            <input type="text" id="name" name="name" value="{{ user.name }}" required><br>
+
+            <label for="email">EMAIL:</label><br>
+            <input type="email" id="email" name="email" value="{{ user.email }}" required><br>
+
+            <label for="role">РОЛЬ:</label><br>
+            <select id="role" name="role" required>
+                <option value="employee" {% if user.role == 'employee' %}selected{% endif %}>СОТРУДНИК</option>
+                <option value="specialist" {% if user.role == 'specialist' %}selected{% endif %}>СПЕЦИАЛИСТ ИТ</option>
+                <option value="admin" {% if user.role == 'admin' %}selected{% endif %}>АДМИНИСТРАТОР</option>
+            </select><br><br>
+
+            <button type="submit">СОХРАНИТЬ</button>
+            <button onclick="window.location.href='/users-management'">ОТМЕНА</button>
+        </form>
+    </div>
+</body>
+</html>

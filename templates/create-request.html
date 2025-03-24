@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>СОЗДАНИЕ ЗАЯВКИ</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>ТЕРМИНАЛ СОЗДАНИЯ ЗАЯВКИ</h1>
+
+        <!-- Форма для создания новой заявки -->
+        <form id="requestForm" action="/requests" method="POST">
+            <label for="description">ОПИСАНИЕ ПРОБЛЕМЫ:</label><br>
+            <textarea id="description" name="description" placeholder="Опишите вашу проблему здесь..." required></textarea><br>
+
+            <button type="submit">СОЗДАТЬ ЗАЯВКУ</button>
+        </form>
+
+        <p><a href="/employee-dashboard">ВЕРНУТЬСЯ К ДАШБОРДУ</a></p>
+    </div>
+
+    <script>
+        document.getElementById('requestForm').addEventListener('submit', async function(e) {
+            e.preventDefault(); // Предотвращаем стандартную отправку формы
+
+            const description = document.getElementById('description').value;
+
+            if (!description.trim()) {
+                alert('Описание проблемы обязательно!');
+                return;
+            }
+
+            try {
+                const response = await fetch('/requests', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams({ description }).toString()
+                });
+
+                if (response.ok) {
+                    alert('Заявка успешно создана!');
+                    document.getElementById('description').value = ''; // Очищаем форму
+                    window.location.href = '/view-status'; // Перенаправляем на страницу статуса заявок
+                } else {
+                    const errorData = await response.json();
+                    alert(errorData.message || 'Ошибка при создании заявки.');
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                alert('Произошла ошибка при создании заявки.');
+            }
+        });
+    </script>
+</body>
+</html>

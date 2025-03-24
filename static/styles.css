@@ -1,0 +1,190 @@
+/* Общие настройки */
+body {
+    background: url('vault-boy.jpg') no-repeat center center fixed; /* Фон с изображением Vault Boy или похожим */
+    background-size: cover;
+    color: limegreen; /* Характерный зеленый цвет терминала */
+    font-family: 'Press Start 2P', cursive; /* Пиксельный шрифт */
+    margin: 0;
+    padding: 0;
+}
+
+/* Контейнеры */
+.container {
+    background: rgba(0, 0, 0, 0.7); /* Полупрозрачный черный фон */
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 600px;
+    margin: auto;
+    margin-top: 50px;
+    box-shadow: 0 4px 8px rgba(0, 255, 0, 0.3); /* Зеленое свечение */
+}
+
+/* Заголовки */
+h1, h2, h3 {
+    text-align: center;
+    color: #4CAF50;
+    text-shadow: 2px 2px 5px black;
+}
+
+/* Текст */
+p {
+    color: limegreen;
+    text-shadow: 1px 1px 2px black;
+}
+
+/* Кнопки */
+button {
+    background-color: #4CAF50;
+    border: none;
+    color: black;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: #3e8e41;
+    transform: scale(1.1);
+}
+
+/* Ввод данных */
+input[type=text],
+input[type=email],
+input[type=password],
+input[type=date],
+textarea {
+    background-color: black;
+    color: limegreen;
+    border: 1px solid limegreen;
+    padding: 10px;
+    width: 100%;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 14px;
+}
+
+/* Выпадающие списки */
+select {
+    background-color: black;
+    color: limegreen;
+    border: 1px solid limegreen;
+    padding: 10px;
+    width: 100%;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 14px;
+}
+
+/* Таблицы */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid limegreen;
+    padding: 10px;
+    text-align: center;
+    color: limegreen;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+th {
+    background-color: #4CAF50;
+    color: black;
+}
+
+/* Ссылки */
+a {
+    color: limegreen;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    color: #4CAF50;
+    text-shadow: 2px 2px 5px limegreen;
+}
+
+/* Формы */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Навигация */
+nav {
+    text-align: center;
+    margin-top: 20px;
+}
+
+nav a {
+    background-color: #4CAF50;
+    color: black;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+nav a:hover {
+    background-color: #3e8e41;
+    transform: scale(1.1);
+}
+
+/* Alerts и сообщения */
+.alert {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: limegreen;
+    padding: 10px;
+    border: 1px solid limegreen;
+    border-radius: 5px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.success {
+    background-color: rgba(76, 175, 80, 0.8);
+    color: black;
+}
+
+.error {
+    background-color: rgba(255, 0, 0, 0.8);
+    color: white;
+}
+
+/* Подвал */
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: limegreen;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    border-top: 1px solid limegreen;
+}
+
+/* Медиа-запросы для адаптивности */
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+    }
+
+    nav a {
+        display: block;
+        margin: 10px auto;
+    }
+}
