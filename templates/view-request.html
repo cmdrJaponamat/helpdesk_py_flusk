@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ДЕТАЛИ ЗАЯВКИ</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>ДЕТАЛИ ЗАЯВКИ №{{ request.id }}</h1>
+
+        <p><strong>АВТОР:</strong> {{ author_name }}</p>
+        <p><strong>ОПИСАНИЕ:</strong> {{ request.description }}</p>
+        <p><strong>СТАТУС:</strong> {{ status_name }}</p>
+        <p><strong>ВРЕМЯ СОЗДАНИЯ:</strong> {{ request.created_at.isoformat() }}</p>
+
+        <h2>ИСТОРИЯ ИЗМЕНЕНИЙ</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>СТАТУС</th>
+                    <th>ВРЕМЯ ИЗМЕНЕНИЯ</th>
+                    <th>ИЗМЕНИЛ</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in history %}
+                <tr>
+                    <td>{{ entry.status }}</td>
+                    <td>{{ entry.changed_at }}</td>
+                    <td>{{ entry.changed_by }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>КОММЕНТАРИИ</h2>
+        <ul>
+            {% for comment in comments %}
+            <li>
+                <strong>{{ comment.author }}:</strong> {{ comment.text }} ({{ comment.created_at }})
+            </li>
+            {% endfor %}
+        </ul>
+
+        <h2>ДОБАВИТЬ КОММЕНТАРИЙ</h2>
+        <form id="commentForm" action="/request/{{ request.id }}/comment" method="POST">
+            <label for="text">ТЕКСТ КОММЕНТАРИЯ:</label><br>
+            <textarea id="text" name="text" required></textarea><br>
+            <button type="submit">ОТПРАВИТЬ</button>
+        </form>
+    </div>
+</body>
+</html>

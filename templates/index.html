@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ТЕРМИНАЛ АВТОРИЗАЦИИ</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>ТЕРМИНАЛ АВТОРИЗАЦИИ</h1>
+        <form id="loginForm" action="/login" method="POST">
+            <label for="email">EMAIL:</label><br>
+            <input type="email" id="email" name="email" required><br>
+
+            <label for="password">ПАРОЛЬ:</label><br>
+            <input type="password" id="password" name="password" required><br>
+
+            <button type="submit">ВХОД</button>
+        </form>
+
+        <p><a href="/register">РЕГИСТРАЦИЯ НОВОГО ПОЛЬЗОВАТЕЛЯ</a></p>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.redirect) {
+                        window.location.href = data.redirect;
+                    }
+                } else {
+                    const errorData = await response.json();
+                    alert(errorData.message || 'Ошибка при входе');
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                alert('Произошла ошибка при попытке войти.');
+            }
+        });
+    </script>
+</body>
+</html>

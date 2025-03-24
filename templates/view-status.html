@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>СТАТУС ЗАЯВОК</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>СТАТУС ВАШИХ ЗАЯВОК</h1>
+
+        <!-- Таблица со списком заявок -->
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ОПИСАНИЕ ПРОБЛЕМЫ</th>
+                    <th>ВРЕМЯ СОЗДАНИЯ</th>
+                    <th>СТАТУС</th>
+                    <th>ДЕЙСТВИЯ</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for req in requests %}
+                <tr>
+                    <td>{{ req.description }}</td>
+                    <td>{{ req.created_at }}</td>
+                    <td>{{ req.status }}</td>
+                    <td>
+                        <button onclick="window.location.href='/request/{{ req.id }}'">ПОДРОБНЕЕ</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <p><a href="/employee-dashboard">ВЕРНУТЬСЯ К ДАШБОРДУ</a></p>
+    </div>
+</body>
+</html>

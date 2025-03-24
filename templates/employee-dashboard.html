@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ДАШБОРД СОТРУДНИКА</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>ДАШБОРД СОТРУДНИКА</h1>
+
+        <nav>
+            <button onclick="window.location.href='/create-request'">СОЗДАТЬ ЗАЯВКУ</button>
+            <button onclick="window.location.href='/view-status'">ПРОСМОТРЕТЬ СТАТУС ЗАЯВОК</button>
+        </nav>
+    </div>
+</body>
+</html>

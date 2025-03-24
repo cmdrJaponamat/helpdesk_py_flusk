@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>АДМИНИСТРАТОРСКИЙ ЗАПРОС</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        textarea {
+            width: 100%;
+            height: 150px;
+            background-color: black;
+            color: limegreen;
+            border: 1px solid limegreen;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        pre {
+            background-color: black;
+            color: limegreen;
+            border: 1px solid limegreen;
+            padding: 10px;
+            height: 300px;
+            overflow-y: scroll;
+            white-space: pre-wrap;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>АДМИНИСТРАТОРСКИЙ ЗАПРОС</h1>
+
+        <form id="queryForm" action="/admin-query" method="POST">
+            <label for="query">ВВЕДИТЕ SQL-ЗАПРОС:</label><br>
+            <textarea id="query" name="query" placeholder="SELECT * FROM Users;" required></textarea><br>
+            <button type="submit">ВЫПОЛНИТЬ</button>
+        </form>
+
+        <h2>РЕЗУЛЬТАТ ЗАПРОСА:</h2>
+        <pre>{{ result | safe }}</pre>
+    </div>
+</body>
+</html>

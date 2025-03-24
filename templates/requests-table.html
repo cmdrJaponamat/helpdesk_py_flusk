@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ТАБЛИЦА ЗАЯВОК</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid limegreen;
+            padding: 10px;
+            text-align: center;
+            color: limegreen;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: black;
+        }
+
+        button {
+            background-color: #4CAF50;
+            border: none;
+            color: black;
+            padding: 5px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #3e8e41;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ТАБЛИЦА ЗАЯВОК</h1>
+
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>АВТОР</th>
+                    <th>ОПИСАНИЕ</th>
+                    <th>СТАТУС</th>
+                    <th>ВРЕМЯ СОЗДАНИЯ</th>
+                    <th>ДЕЙСТВИЯ</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for req in requests %}
+                <tr>
+                    <td>{{ req.id }}</td>
+                    <td>{{ req.author }}</td>
+                    <td>{{ req.description | truncate(50) }}</td>
+                    <td>{{ req.status }}</td>
+                    <td>{{ req.created_at }}</td>
+                    <td>
+                        <!-- Кнопка просмотра детальной информации о заявке -->
+                        <button onclick="window.location.href='/request/{{ req.id }}'">ПРОСМОТРЕТЬ</button>
+
+                        {% if current_user.role == 'specialist' %}
+                        <!-- Кнопка изменения статуса (только для специалистов) -->
+                        <button onclick="updateStatus({{ req.id }})">ИЗМЕНИТЬ СТАТУС</button>
+                        {% endif %}
+
+                        {% if current_user.role == 'admin' %}
+                        <!-- Кнопка удаления заявки (только для администраторов) -->
+                        <button onclick="deleteRequest({{ req.id }})">УДАЛИТЬ</button>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- JavaScript для обработки действий -->
+        <script>
+            // Функция для изменения статуса заявки
+            function updateStatus(requestId) {
+                const newStatus = prompt('Введите новый статус (ID):');
+                if (newStatus) {
+                    fetch(`/requests/${requestId}/status`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ status_id: newStatus })
+                    })
+                    .then(response => response.json())
+                    .then(data => alert(data.message))
+                    .catch(error => alert('Ошибка при изменении статуса.'));
+                }
+            }
+
+            // Функция для удаления заявки
+            function deleteRequest(requestId) {
+                if (confirm('Вы уверены, что хотите удалить заявку?')) {
+                    fetch(`/delete-request/${requestId}`, { method: 'DELETE' })
+                        .then(response => response.json())
+                        .then(data => {
+                            alert(data.message);
+                            window.location.reload(); // Обновляем страницу после удаления
+                        })
+                        .catch(error => alert('Ошибка при удалении заявки.'));
+                }
+            }
+        </script>
+    </div>
+</body>
+</html>

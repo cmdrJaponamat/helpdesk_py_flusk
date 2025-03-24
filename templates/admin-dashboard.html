@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ДАШБОРД АДМИНИСТРАТОРА</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>ДАШБОРД АДМИНИСТРАТОРА</h1>
+
+        <nav>
+            <button onclick="window.location.href='/create-report'">СФОРМИРОВАТЬ ОТЧЕТ</button>
+            <button onclick="window.location.href='/requests-table'">ТАБЛИЦА ЗАЯВОК</button>
+            <button onclick="window.location.href='/users-management'">УПРАВЛЕНИЕ ПОЛЬЗОВАТЕЛЯМИ</button>
+            <button onclick="window.location.href='/portal-settings'">НАСТРОЙКИ ПОРТАЛА</button>
+            <button onclick="window.location.href='/admin-query'">ВЫПОЛНИТЬ SQL-ЗАПРОС</button>
+
+        </nav>
+    </div>
+</body>
+</html>
